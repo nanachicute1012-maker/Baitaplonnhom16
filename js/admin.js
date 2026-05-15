@@ -55,3 +55,58 @@ $(document).ready(function () {
     loadTopics();
     loadQuestions();
 });
+// Hàm tải lịch sử làm bài
+async function loadResults() {
+    try {
+        // 1. Lấy dữ liệu từ API results và topics
+        const results = await API.fetchData("results");
+        const topics = await API.fetchData("topics");
+
+        if (!results || results.length === 0) {
+            $('#admin-result-list').html('<tr><td colspan="5" class="text-center py-4">Chưa có ai làm bài thi nào.</td></tr>');
+            return;
+        }
+
+        // 2. Render danh sách ra bảng (Đảo ngược để cái mới nhất hiện lên đầu)
+        let html = results.reverse().map(res => {
+            // Tìm tên chủ đề dựa vào topicId
+            const topic = topics.find(t => t.id == res.topicId);
+            
+            return `
+                <tr>
+                    <td class="ps-4 fw-bold text-dark">${res.studentName || "Ẩn danh"}</td>
+                    <td><span class="badge bg-secondary">${topic ? topic.name : 'N/A'}</span></td>
+                    <td>
+                        <span class="fw-bold ${res.score >= 50 ? 'text-success' : 'text-danger'}">
+                            ${res.score}%
+                        </span>
+                    </td>
+                    <td class="text-muted small">${res.date}</td>
+                    <td class="text-end pe-4">
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteResult('${res.id}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        $('#admin-result-list').html(html);
+    } catch (error) {
+        console.error("Lỗi khi tải lịch sử:", error);
+    }
+}
+
+// Hàm xóa lịch sử (nếu cần)
+window.deleteResult = async (id) => {
+    if (confirm("Bạn có chắc muốn xóa dòng lịch sử này không?")) {
+        await API.delete("results", id);
+        loadResults(); // Tải lại bảng
+    }
+};
+
+// ĐỪNG QUÊN: Gọi hàm này khi trang web vừa load xong
+$(document).ready(function() {
+    loadResults(); 
+    // ... các hàm loadTopics, loadQuestions cũ ...
+});
