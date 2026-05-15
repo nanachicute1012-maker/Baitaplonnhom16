@@ -1,0 +1,99 @@
+/* Tông màu chủ đạo */
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --success-color: #4cc9f0;
+    --bg-light: #f8f9fa;
+    --text-dark: #2b2d42;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Navbar hiện đại */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hiệu ứng cho Card chủ đề */
+.topic-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.topic-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.topic-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 1.5rem;
+}
+
+/* Giao diện câu hỏi */
+.question-card {
+    border-radius: 12px;
+    border-left: 5px solid var(--primary-color) !important;
+    margin-bottom: 20px;
+}
+
+.form-check {
+    padding: 12px 15px 12px 40px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #edf2f7;
+    transition: all 0.2s;
+}
+
+.form-check:hover {
+    background-color: #f1f5ff;
+    border-color: var(--primary-color);
+}
+
+.form-check-input:checked+.form-check-label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Nút bấm */
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+}
+
+/* Modal kết quả xịn xò */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+}
+
+#result-body h2 {
+    font-size: 3rem;
+    background: -webkit-linear-gradient(var(--primary-color), var(--success-color));
+    -webkit-text-fill-color: transparent;
+}
