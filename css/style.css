@@ -74,6 +74,21 @@ body::before {
   box-shadow: none;
 }
 
+#addQuestionModal .form-control,
+#addQuestionModal .form-select {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  background: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+#addQuestionModal .form-control:focus,
+#addQuestionModal .form-select:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.15);
+}
+
 /* ===== NAVBAR ===== */
 .navbar {
   background: #2563eb !important;
