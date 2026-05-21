@@ -5,7 +5,7 @@ $(document).ready(function () {
     async function init() {
         const topics = await API.fetchData("topics");
         const html = topics.map(t => `
-            <div class="col-md-4">
+            <div class="col-md-4 subject-item">
                 <div class="card h-100 shadow-sm border-0 p-3 text-center">
                     <h5 class="fw-bold">${t.name}</h5>
                     <button class="btn btn-primary mt-2" onclick="startQuiz('${t.id}', '${t.name}')">Làm bài</button>
@@ -59,4 +59,18 @@ $(document).ready(function () {
     });
 
     init();
+});
+// Tìm kiếm môn học
+$("#searchSubject").on("keyup", function () {
+  let keyword = $(this).val().toLowerCase();
+
+  $(".subject-item").each(function () {
+    let subjectName = $(this).text().toLowerCase();
+
+    if (subjectName.includes(keyword)) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
 });
