@@ -11,6 +11,7 @@ $(document).ready(function () {
     function resetFormState() {
         editingQuestionId = null;
         $('#form-add-question')[0].reset();
+        $('#question_level').val('Dễ');
         $('#addQuestionModal .modal-title').text('Thêm câu hỏi mới');
         $('#form-add-question button[type="submit"]').text('Lưu câu hỏi');
     }
@@ -48,7 +49,7 @@ $(document).ready(function () {
             content: $('#content').val(),
             options: [$('#opt0').val(), $('#opt1').val(), $('#opt2').val(), $('#opt3').val()],
             correct_answer: parseInt($('#correct_answer').val()),
-            level: "Thường"
+            level: $('#question_level').val() || "Dễ"
         };
 
         if (editingQuestionId) {
@@ -80,6 +81,7 @@ $(document).ready(function () {
         $('#opt1').val(question.options?.[1] || '');
         $('#opt2').val(question.options?.[2] || '');
         $('#opt3').val(question.options?.[3] || '');
+        $('#question_level').val(question.level || 'Dễ');
         $('#correct_answer').val(question.correct_answer ?? 0);
         $('#addQuestionModal .modal-title').text('Sửa câu hỏi');
         $('#form-add-question button[type="submit"]').text('Cập nhật');

@@ -170,14 +170,24 @@
                 />
               </div>
             </div>
-            <div class="mt-3">
-              <label class="form-label fw-bold">Đáp án đúng</label>
-              <select class="form-select" id="correct_answer">
-                <option value="0">A</option>
-                <option value="1">B</option>
-                <option value="2">C</option>
-                <option value="3">D</option>
-              </select>
+            <div class="row g-3">
+              <div class="col-md-6 mt-3">
+                <label class="form-label fw-bold">Độ khó</label>
+                <select class="form-select" id="question_level" required>
+                  <option value="Dễ">Dễ</option>
+                  <option value="Trung bình">Trung bình</option>
+                  <option value="Khó">Khó</option>
+                </select>
+              </div>
+              <div class="col-md-6 mt-3">
+                <label class="form-label fw-bold">Đáp án đúng</label>
+                <select class="form-select" id="correct_answer">
+                  <option value="0">A</option>
+                  <option value="1">B</option>
+                  <option value="2">C</option>
+                  <option value="3">D</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
