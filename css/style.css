@@ -1,8 +1,77 @@
 /* ===== BODY ===== */
 body {
-  background: #f3f6fb;
+  background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.13), transparent 22%),
+              radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.16), transparent 20%),
+              #f8fbff;
   font-family: "Inter", sans-serif;
   color: #1e293b;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 15% 10%, rgba(59, 130, 246, 0.14), transparent 20%),
+                    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.08), transparent 20%);
+  z-index: -1;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+}
+
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 260px;
+  height: 260px;
+  background: rgba(37, 99, 235, 0.12);
+  border-radius: 50%;
+  filter: blur(20px);
+}
+
+.hero-title {
+  font-size: 2.2rem;
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+#topic-container p {
+  color: #475569;
+  font-size: 1rem;
+}
+
+.input-group {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+}
+
+.input-group-text {
+  border: none;
+  background: #ffffff;
+  color: #2563eb;
+}
+
+.form-control {
+  border: none;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  border: none;
+  box-shadow: none;
 }
 
 /* ===== NAVBAR ===== */
@@ -197,6 +266,10 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
   #topic-container h1 {
     font-size: 1.8rem;
   }

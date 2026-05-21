@@ -58,8 +58,53 @@ $(document).ready(function () {
         });
     });
 
+    $('#historyButton').click(openHistory);
+
     init();
 });
+
+async function openHistory() {
+    $('#history-loading').removeClass('d-none');
+    $('#history-content').addClass('d-none');
+    $('#history-empty').addClass('d-none');
+
+    try {
+        const [topics, results] = await Promise.all([
+            API.fetchData('topics'),
+            API.fetchData('results')
+        ]);
+
+        const topicMap = topics.reduce((map, topic) => {
+            map[topic.id] = topic.name;
+            return map;
+        }, {});
+
+        const sortedResults = results
+            .slice()
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const rows = sortedResults.map(result => {
+            return `<tr>
+                        <td>${result.date}</td>
+                        <td>${topicMap[result.topicId] || 'Không rõ'}</td>
+                        <td><span class="badge bg-success">${result.score}%</span></td>
+                    </tr>`;
+        }).join('');
+
+        $('#history-table-body').html(rows);
+        if (rows.length === 0) {
+            $('#history-empty').removeClass('d-none');
+        }
+
+        $('#history-loading').addClass('d-none');
+        $('#history-content').removeClass('d-none');
+        new bootstrap.Modal($('#historyModal')).show();
+    } catch (error) {
+        $('#history-loading').html(`<p class="text-danger">Không thể tải lịch sử. Vui lòng thử lại sau.</p>`);
+        console.error(error);
+    }
+}
+
 // Tìm kiếm môn học
 $("#searchSubject").on("keyup", function () {
   let keyword = $(this).val().toLowerCase();
