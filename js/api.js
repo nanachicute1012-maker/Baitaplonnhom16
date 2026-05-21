@@ -9,7 +9,7 @@ const ENDPOINTS = {
 };
 
 const API = {
-    // Hàm lấy dữ liệu (Read)
+    // Hàm lấy dữ liệu
     fetchData: async (resource, query = "") => {
         const url = `${ENDPOINTS[resource]}${query}`;
         const response = await fetch(url);
@@ -17,7 +17,7 @@ const API = {
         return await response.json();
     },
 
-    // Hàm tạo mới dữ liệu (Create)
+    // Hàm tạo mới dữ liệu
     create: async (resource, data) => {
         const url = ENDPOINTS[resource];
         const response = await fetch(url, {
@@ -28,7 +28,7 @@ const API = {
         return response.ok;
     },
 
-    // Hàm xóa dữ liệu (Delete)
+    // Hàm xóa dữ liệu
     delete: async (resource, id) => {
         const url = `${ENDPOINTS[resource]}/${id}`;
         const response = await fetch(url, { method: 'DELETE' });

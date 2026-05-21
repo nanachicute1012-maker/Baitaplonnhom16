@@ -97,16 +97,13 @@ async function loadResults() {
     }
 }
 
-// Hàm xóa lịch sử (nếu cần)
+// Hàm xóa lịch sử
 window.deleteResult = async (id) => {
     if (confirm("Bạn có chắc muốn xóa dòng lịch sử này không?")) {
         await API.delete("results", id);
         loadResults(); // Tải lại bảng
     }
 };
-
-// ĐỪNG QUÊN: Gọi hàm này khi trang web vừa load xong
 $(document).ready(function() {
-    loadResults(); 
-    // ... các hàm loadTopics, loadQuestions cũ ...
+    loadResults(); // Tải lịch sử làm bài khi trang admin được mở
 });
