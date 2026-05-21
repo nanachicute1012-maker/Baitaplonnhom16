@@ -33,5 +33,16 @@ const API = {
         const url = `${ENDPOINTS[resource]}/${id}`;
         const response = await fetch(url, { method: 'DELETE' });
         return response.ok;
+    },
+
+    // Hàm cập nhật dữ liệu
+    update: async (resource, id, data) => {
+        const url = `${ENDPOINTS[resource]}/${id}`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        return response.ok;
     }
 };

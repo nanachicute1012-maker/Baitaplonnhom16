@@ -1,9 +1,18 @@
 $(document).ready(function () {
+    let editingQuestionId = null;
+
     // 1. Tải danh sách chủ đề vào ô Chọn
     async function loadTopics() {
         const topics = await API.fetchData("topics");
         const html = topics.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
         $('#selectTopic').html(html);
+    }
+
+    function resetFormState() {
+        editingQuestionId = null;
+        $('#form-add-question')[0].reset();
+        $('#addQuestionModal .modal-title').text('Thêm câu hỏi mới');
+        $('#form-add-question button[type="submit"]').text('Lưu câu hỏi');
     }
 
     // 2. Hiển thị danh sách câu hỏi
@@ -19,14 +28,19 @@ $(document).ready(function () {
                     <td><span class="badge bg-info text-dark">${topic ? topic.name : 'N/A'}</span></td>
                     <td>${q.level || 'Dễ'}</td>
                     <td class="text-end pe-4">
-                        <button class="btn btn-sm btn-danger" onclick="deleteQ('${q.id}')">Xóa</button>
+                        <button class="btn btn-outline-warning btn-sm admin-action-btn me-2" onclick="editQ('${q.id}')" title="Sửa câu hỏi">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm admin-action-btn" onclick="deleteQ('${q.id}')" title="Xóa câu hỏi">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                     </td>
                 </tr>`;
         }).join('');
         $('#admin-question-list').html(html || '<tr><td colspan="4" class="text-center">Chưa có câu hỏi nào</td></tr>');
     }
 
-    // 3. Xử lý lưu câu hỏi mới
+    // 3. Xử lý lưu câu hỏi mới hoặc cập nhật câu hỏi
     $('#form-add-question').submit(async function (e) {
         e.preventDefault();
         const data = {
@@ -37,13 +51,41 @@ $(document).ready(function () {
             level: "Thường"
         };
 
+        if (editingQuestionId) {
+            if (await API.update("questions", editingQuestionId, data)) {
+                alert("Đã cập nhật câu hỏi!");
+                bootstrap.Modal.getInstance($('#addQuestionModal')).hide();
+                resetFormState();
+                loadQuestions();
+            }
+            return;
+        }
+
         if (await API.create("questions", data)) {
             alert("Đã lưu câu hỏi!");
             bootstrap.Modal.getInstance($('#addQuestionModal')).hide();
-            this.reset();
+            resetFormState();
             loadQuestions();
         }
     });
+
+    window.editQ = async (id) => {
+        const question = await API.fetchData('questions', `/${id}`);
+        if (!question) return;
+
+        editingQuestionId = id;
+        $('#selectTopic').val(question.topicId);
+        $('#content').val(question.content);
+        $('#opt0').val(question.options?.[0] || '');
+        $('#opt1').val(question.options?.[1] || '');
+        $('#opt2').val(question.options?.[2] || '');
+        $('#opt3').val(question.options?.[3] || '');
+        $('#correct_answer').val(question.correct_answer ?? 0);
+        $('#addQuestionModal .modal-title').text('Sửa câu hỏi');
+        $('#form-add-question button[type="submit"]').text('Cập nhật');
+
+        new bootstrap.Modal($('#addQuestionModal')).show();
+    };
 
     window.deleteQ = async (id) => {
         if (confirm("Xóa câu hỏi này?")) {
@@ -52,9 +94,12 @@ $(document).ready(function () {
         }
     };
 
+    $('#addQuestionModal').on('hidden.bs.modal', resetFormState);
+
     loadTopics();
     loadQuestions();
 });
+
 // Hàm tải lịch sử làm bài
 async function loadResults() {
     try {
