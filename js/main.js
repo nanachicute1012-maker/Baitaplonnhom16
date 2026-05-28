@@ -20,6 +20,21 @@ function demoImageForTopic(index) {
 }
 
 $(document).ready(function () {
+    // 0. Cấu hình giao diện Sáng/Tối
+    const themeToggle = document.getElementById("themeToggle");
+    const savedTheme = localStorage.getItem("spark-theme") || "dark";
+
+    const applyTheme = (theme) => {
+        document.body.dataset.theme = theme;
+        if (themeToggle) {
+            themeToggle.innerHTML = theme === "dark" 
+                ? '<i class="bi bi-moon-fill"></i> Tối' 
+                : '<i class="bi bi-sun-fill"></i> Sáng';
+        }
+    };
+
+    applyTheme(savedTheme);
+
     let currentQuestions = [];
 
     // 1. Load danh sách chủ đề
@@ -124,6 +139,13 @@ $(document).ready(function () {
         $("#why").removeClass("d-none");
         $('#quiz-section').addClass('d-none');
         $('#topic-container').removeClass('d-none');
+    });
+
+    // Sự kiện nút đổi theme
+    $('#themeToggle').click(function() {
+        const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("spark-theme", nextTheme);
+        applyTheme(nextTheme);
     });
 
     $('#question-container').on('change', 'input[type="radio"]', function () {

@@ -23,6 +23,21 @@ async function loadDashboardStats() {
 }
 
 $(document).ready(function () {
+    // Cấu hình giao diện Sáng/Tối cho Admin
+    const themeToggleAdmin = document.getElementById("themeToggleAdmin");
+    const savedTheme = localStorage.getItem("spark-theme") || "dark";
+
+    const applyAdminTheme = (theme) => {
+        document.body.dataset.theme = theme;
+        if (themeToggleAdmin) {
+            themeToggleAdmin.innerHTML = theme === "dark" 
+                ? '<i class="bi bi-moon-fill"></i> Tối' 
+                : '<i class="bi bi-sun-fill"></i> Sáng';
+        }
+    };
+
+    applyAdminTheme(savedTheme);
+
     let editingQuestionId = null;
 
     // 1. Tải danh sách chủ đề vào ô Chọn
@@ -39,6 +54,13 @@ $(document).ready(function () {
         $('#addQuestionModal .modal-title').text('Thêm câu hỏi mới');
         $('#form-add-question button[type="submit"]').text('Lưu câu hỏi');
     }
+
+    // Sự kiện nút đổi theme Admin
+    $('#themeToggleAdmin').click(function() {
+        const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("spark-theme", nextTheme);
+        applyAdminTheme(nextTheme);
+    });
 
     // 2. Hiển thị danh sách câu hỏi
     async function loadQuestions() {
