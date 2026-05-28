@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QuizMaster - Hệ thống luyện thi</title>
+    <meta
+      name="description"
+      content="SparkQuiz - Nền tảng làm bài trắc nghiệm trực tuyến, luyện tập chủ đề và theo dõi lịch sử kết quả một cách chuyên nghiệp."
+    />
+    <title>SparkQuiz | Luyện tập trắc nghiệm chuyên nghiệp</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -18,224 +18,339 @@
     />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body class="bg-light" style="font-family: &quot;Inter&quot;, sans-serif">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-5">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">📝 QuizMaster</a>
-        <div class="ms-auto d-flex align-items-center gap-2">
+  <body>
+    <div class="page-shell">
+      <header class="site-header shadow-sm">
+        <nav class="navbar navbar-expand-lg container py-3">
+          <a
+            class="navbar-brand d-flex align-items-center gap-2 fw-bold text-white"
+            href="index.html"
+          >
+            <span class="brand-mark">S</span>
+            <span>SparkQuiz</span>
+          </a>
           <button
-            id="historyButton"
+            class="navbar-toggler border-0"
             type="button"
-            class="btn btn-outline-light btn-sm fw-bold"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            Lịch sử làm bài
+            <i class="bi bi-list text-white fs-4"></i>
           </button>
-          <a href="admin.html" class="btn btn-light btn-sm fw-bold text-primary"
-            >Kênh Giáo Viên</a
-          >
-        </div>
-      </div>
-    </nav>
-    <div class="container mb-4">
-      <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div class="search-shell shadow-sm">
-            <div class="input-group search-box">
-              <span class="input-group-text bg-white">
-                <i class="bi bi-search"></i>
-              </span>
-
-              <input
-                type="text"
-                id="searchSubject"
-                class="form-control py-3"
-                placeholder="Tìm kiếm môn học..."
-              />
-            </div>
-            <p class="search-hint mt-2 mb-0">
-              Gợi ý: nhập tên môn học hoặc chủ đề bạn muốn ôn tập.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div id="topic-container">
-        <div
-          class="hero-banner position-relative overflow-hidden rounded-4 p-4 p-md-5 mb-5 shadow-sm"
-        >
-          <div class="row align-items-center g-4">
-            <div class="col-lg-8">
-              <span class="badge badge-soft mb-2 py-2 px-3 fw-semibold"
-                >Khám phá kiến thức</span
-              >
-              <h2 class="hero-title fw-bold mb-3">
-                Chinh phục điểm cao cùng QuizMaster
-              </h2>
-              <p class="hero-copy mb-3">
-                Luyện tập nhanh với bộ đề mô phỏng, tổng hợp kiến thức và thử
-                thách phù hợp cho mọi trình độ.
-              </p>
-              <div class="d-flex flex-wrap gap-2">
-                <span class="chip">⚡ Tốc độ luyện tập</span>
-                <span class="chip">📊 Theo dõi kết quả</span>
-                <span class="chip">🎯 Giao diện thân thiện</span>
-              </div>
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-              <div class="hero-highlight">
-                <i class="bi bi-trophy-fill"></i>
-                <span>Ôn luyện mỗi ngày, tiến bộ mỗi giờ</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row g-4 mb-5">
-          <div class="col-md-4">
-            <article class="feature-card h-100">
-              <div class="feature-icon">
-                <i class="bi bi-lightning-charge-fill"></i>
-              </div>
-              <h3>Thi nhanh, hiệu quả</h3>
-              <p>
-                Giao diện tối ưu giúp bạn bắt đầu luyện tập chỉ trong vài giây.
-              </p>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="feature-card h-100">
-              <div class="feature-icon">
-                <i class="bi bi-graph-up-arrow"></i>
-              </div>
-              <h3>Điểm số rõ ràng</h3>
-              <p>Nhận kết quả ngay sau khi nộp bài để biết mức độ tiến bộ.</p>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="feature-card h-100">
-              <div class="feature-icon"><i class="bi bi-sliders"></i></div>
-              <h3>Thêm chủ đề dễ dàng</h3>
-              <p>
-                Dashboard giáo viên giúp quản lý nội dung học tập một cách trực
-                quan.
-              </p>
-            </article>
-          </div>
-        </div>
-        <div class="text-center mb-5">
-          <h1 class="fw-bold text-dark">Hôm nay bạn muốn học gì?</h1>
-          <p class="text-muted">
-            Chọn một chủ đề dưới đây để bắt đầu kiểm tra kiến thức.
-          </p>
-        </div>
-        <div id="topic-list" class="row g-4">
-          <div class="col-12 text-center">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2">Đang tải danh sách chủ đề...</p>
-          </div>
-        </div>
-      </div>
-
-      <div id="quiz-section" class="d-none">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="card shadow-sm border-0 mb-4">
-              <div
-                class="card-header bg-white py-3 d-flex justify-content-between align-items-center"
-              >
-                <h4 id="quiz-title" class="mb-0 fw-bold text-primary">
-                  Tiêu đề bài thi
-                </h4>
-                <span class="badge bg-primary text-white px-3 py-2 border"
-                  >Đang diễn ra</span
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+              <li class="nav-item">
+                <a class="nav-link text-white-50" href="#topics">Chủ đề</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white-50" href="#why">Lợi ích</a>
+              </li>
+              <li class="nav-item">
+                <button
+                  id="openAdminLoginBtn"
+                  class="btn btn-outline-light btn-sm rounded-pill px-3"
+                  type="button"
                 >
+                  Đăng nhập
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  id="themeToggle"
+                  class="btn btn-outline-light btn-sm rounded-pill px-3 me-2"
+                  type="button"
+                  aria-label="Chuyển giao diện sáng/tối"
+                >
+                  <i class="bi bi-moon-fill"></i> Tối
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  id="historyButton"
+                  class="btn btn-light btn-sm rounded-pill px-3"
+                >
+                  Lịch sử làm bài
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <main class="container py-4">
+        <section class="hero card border-0 shadow-lg overflow-hidden">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+              <p class="eyebrow">Nền tảng ôn luyện thông minh</p>
+              <h1 class="hero-title">
+                Biến việc làm quiz thành trải nghiệm học tập hiện đại và thú vị.
+              </h1>
+              <p class="hero-copy text-white-50 mb-4">
+                Khám phá nhiều chủ đề, luyện tập nhanh với giao diện tinh gọn,
+                theo dõi kết quả và nâng cao điểm số mỗi ngày.
+              </p>
+              <div class="d-flex flex-wrap gap-3 mb-4">
+                <a
+                  class="btn btn-primary btn-lg rounded-pill px-4"
+                  href="#topics"
+                  >Bắt đầu thi thử</a
+                >
+                <button
+                  id="historyButtonSecondary"
+                  class="btn btn-outline-light btn-lg rounded-pill px-4"
+                >
+                  Xem lịch sử
+                </button>
               </div>
-              <div class="card-body p-4">
-                <div id="question-container"></div>
-                <div class="text-center mt-4">
-                  <button
-                    id="btn-submit"
-                    class="btn btn-success btn-lg px-5 fw-bold shadow"
-                  >
-                    <i class="bi bi-send-fill"></i> Nộp bài ngay
-                  </button>
-                </div>
+              <div class="stat-grid">
+                <article class="stat-card">
+                  <strong>20+</strong>
+                  <span>Chủ đề luyện tập</span>
+                </article>
+                <article class="stat-card">
+                  <strong>98%</strong>
+                  <span>Tỷ lệ hài lòng</span>
+                </article>
+                <article class="stat-card">
+                  <strong>24/7</strong>
+                  <span>Truy cập mọi lúc</span>
+                </article>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="feature-card">
+                <p class="eyebrow">Điểm nổi bật</p>
+                <ul class="feature-list list-unstyled mb-0">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Giao diện hiện đại,
+                    responsive trên mọi thiết bị
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Tìm kiếm chủ đề
+                    nhanh chóng
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Theo dõi kết quả và
+                    lịch sử làm bài
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Dễ dàng mở rộng cho
+                    giáo viên và học sinh
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section id="topics" class="section-block">
+          <div
+            class="section-heading d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3"
+          >
+            <div>
+              <p class="eyebrow">Danh mục</p>
+              <h2 class="section-title">Chọn chủ đề để bắt đầu</h2>
+              <p class="section-copy">
+                Tìm nhanh môn học bạn muốn luyện tập hôm nay.
+              </p>
+            </div>
+            <label class="search-box" for="searchSubject">
+              <i class="bi bi-search"></i>
+              <input
+                id="searchSubject"
+                type="search"
+                placeholder="Tìm chủ đề, môn học..."
+              />
+            </label>
+          </div>
+
+          <div id="topic-container" class="row g-4">
+            <div id="topic-list" class="row g-4 w-100"></div>
+          </div>
+
+          <article
+            id="quiz-section"
+            class="quiz-card card border-0 shadow-sm d-none mt-4"
+          >
+            <div class="card-body p-4 p-lg-5">
+              <p class="eyebrow">Làm bài</p>
+              <div
+                class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4"
+              >
+                <div>
+                  <h3 id="quiz-title" class="mb-1">Chủ đề hiện tại</h3>
+                  <p class="text-muted mb-0">
+                    Chọn đáp án đúng nhất để hoàn thành bài kiểm tra.
+                  </p>
+                </div>
+                <button
+                  id="btn-back-topics"
+                  type="button"
+                  class="btn btn-outline-secondary rounded-pill"
+                >
+                  Quay lại danh sách
+                </button>
+              </div>
+              <div id="question-container" class="quiz-question-stack"></div>
+              <div class="d-flex justify-content-end mt-4">
+                <button
+                  id="btn-submit"
+                  type="button"
+                  class="btn btn-primary btn-lg rounded-pill px-4"
+                >
+                  Nộp bài
+                </button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="why" class="section-block">
+          <div class="section-heading mb-4">
+            <p class="eyebrow">Lý do nên dùng</p>
+            <h2 class="section-title">
+              Thiết kế tập trung vào trải nghiệm học sinh
+            </h2>
+          </div>
+          <div class="row g-4">
+            <article class="col-md-4">
+              <div class="info-card h-100">
+                <i class="bi bi-lightning-charge-fill info-icon"></i>
+                <h3>Tiết kiệm thời gian</h3>
+                <p>
+                  Chọn nhanh chủ đề, làm bài ngay và xem kết quả chỉ trong vài
+                  cú nhấp chuột.
+                </p>
+              </div>
+            </article>
+            <article class="col-md-4">
+              <div class="info-card h-100">
+                <i class="bi bi-graph-up-arrow info-icon"></i>
+                <h3>Hỗ trợ theo dõi</h3>
+                <p>
+                  Biến kết quả thành dữ liệu rõ ràng, giúp học sinh nhìn thấy
+                  tiến bộ từng ngày.
+                </p>
+              </div>
+            </article>
+            <article class="col-md-4">
+              <div class="info-card h-100">
+                <i class="bi bi-phone-fill info-icon"></i>
+                <h3>Responsive mọi nền tảng</h3>
+                <p>
+                  Trang web mượt mà trên máy tính, máy tính bảng và điện thoại.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
     </div>
 
     <div
-      class="modal fade"
-      id="resultModal"
-      data-bs-backdrop="static"
+      class="modal fade admin-login-modal"
+      id="adminLoginModal"
       tabindex="-1"
+      aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-          <div class="modal-header bg-primary text-white border-0">
-            <h5 class="modal-title fw-bold">Kết quả bài làm</h5>
-          </div>
-          <div class="modal-body text-center py-5" id="result-body"></div>
-          <div class="modal-footer border-0 justify-content-center">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+          <div class="modal-header border-0 pb-0">
+            <div>
+              <p class="eyebrow mb-1">Quản trị viên</p>
+              <h5 class="modal-title fw-bold">Đăng nhập</h5>
+            </div>
             <button
               type="button"
-              class="btn btn-primary px-4 fw-bold"
-              onclick="location.reload()"
-            >
-              <i class="bi bi-arrow-repeat"></i> Hoàn thành & Quay lại
-            </button>
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-4 pt-2">
+            <form id="adminLoginForm" class="admin-login-form">
+              <label class="form-label">Tên đăng nhập</label>
+              <input
+                id="adminUsername"
+                type="text"
+                class="form-control"
+                placeholder="admin"
+                required
+              />
+              <label class="form-label mt-3">Mật khẩu</label>
+              <input
+                id="adminPassword"
+                type="password"
+                class="form-control"
+                placeholder="••••••••"
+                required
+              />
+              <div id="adminLoginError" class="text-danger small mt-2 d-none">
+                Tên đăng nhập hoặc mật khẩu không đúng.
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary rounded-pill px-4 mt-4 w-100"
+              >
+                Đăng nhập
+              </button>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="modal fade" id="historyModal" tabindex="-1">
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-          <div class="modal-header bg-primary text-white border-0">
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold">Kết quả làm bài</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center" id="result-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-0 pb-0">
             <h5 class="modal-title fw-bold">Lịch sử làm bài</h5>
             <button
               type="button"
-              class="btn-close btn-close-white"
+              class="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Đóng"
+              aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body p-4">
-            <div id="history-loading" class="text-center py-5">
-              <div class="spinner-border text-primary" role="status"></div>
-              <p class="mt-3 mb-0">Đang tải lịch sử...</p>
-            </div>
+          <div class="modal-body">
+            <div id="history-loading" class="text-center py-3">Đang tải...</div>
             <div id="history-content" class="d-none">
               <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                  <thead>
+                <table class="table align-middle mb-0">
+                  <thead class="table-light">
                     <tr>
-                      <th>Ngày giờ</th>
-                      <th>Môn học</th>
-                      <th>Điểm</th>
+                      <th>Thời gian</th>
+                      <th>Chủ đề</th>
+                      <th>Điểm số</th>
                     </tr>
                   </thead>
                   <tbody id="history-table-body"></tbody>
                 </table>
               </div>
-              <p id="history-empty" class="text-muted text-center mt-4 d-none">
-                Chưa có lịch sử làm bài nào.
-              </p>
             </div>
-          </div>
-          <div class="modal-footer border-0 justify-content-end">
-            <button
-              type="button"
-              class="btn btn-secondary px-4 fw-bold"
-              data-bs-dismiss="modal"
-            >
-              Đóng
-            </button>
+            <div id="history-empty" class="d-none text-center text-muted py-3">
+              Chưa có kết quả nào được lưu.
+            </div>
           </div>
         </div>
       </div>
@@ -244,7 +359,74 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/api.js"></script>
-    <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("spark-theme") || "dark";
+
+      function applyTheme(theme) {
+        document.body.dataset.theme = theme;
+        if (!themeToggle) return;
+
+        const isDark = theme === "dark";
+        themeToggle.innerHTML = isDark
+          ? '<i class="bi bi-moon-fill"></i> Tối'
+          : '<i class="bi bi-sun-fill"></i> Sáng';
+      }
+
+      applyTheme(savedTheme);
+
+      themeToggle?.addEventListener("click", function () {
+        const nextTheme =
+          document.body.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("spark-theme", nextTheme);
+        applyTheme(nextTheme);
+      });
+
+      document
+        .getElementById("btn-back-topics")
+        ?.addEventListener("click", function () {
+          document.getElementById("topic-container").classList.remove("d-none");
+          document.getElementById("quiz-section").classList.add("d-none");
+        });
+
+      document
+        .getElementById("historyButtonSecondary")
+        ?.addEventListener("click", function () {
+          document.getElementById("historyButton")?.click();
+        });
+
+      const adminLoginForm = document.getElementById("adminLoginForm");
+      const adminLoginError = document.getElementById("adminLoginError");
+      const adminUsernameInput = document.getElementById("adminUsername");
+      const adminPasswordInput = document.getElementById("adminPassword");
+
+      document
+        .getElementById("openAdminLoginBtn")
+        ?.addEventListener("click", function () {
+          adminLoginError.classList.add("d-none");
+          adminLoginForm.reset();
+          new bootstrap.Modal(
+            document.getElementById("adminLoginModal"),
+          ).show();
+        });
+
+      adminLoginForm?.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const username = adminUsernameInput.value.trim();
+        const password = adminPasswordInput.value.trim();
+
+        if (
+          username === "Nhatdl207@" &&
+          password === "nanachicute104201910122007<3"
+        ) {
+          window.location.href = "admin.html";
+          return;
+        }
+
+        adminLoginError.classList.remove("d-none");
+      });
+    </script>
   </body>
 </html>

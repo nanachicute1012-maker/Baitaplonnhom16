@@ -1,3 +1,27 @@
+async function loadDashboardStats() {
+    try {
+        const [questions, topics, results] = await Promise.all([
+            API.fetchData("questions"),
+            API.fetchData("topics"),
+            API.fetchData("results")
+        ]);
+
+        const totalQuestions = Array.isArray(questions) ? questions.length : 0;
+        const totalTopics = Array.isArray(topics) ? topics.length : 0;
+        const totalAttempts = Array.isArray(results) ? results.length : 0;
+        const averageScore = totalAttempts > 0
+            ? results.reduce((sum, item) => sum + (Number(item.score) || 0), 0) / totalAttempts
+            : 0;
+
+        $('#stat-questions').text(totalQuestions);
+        $('#stat-attempts').text(totalAttempts);
+        $('#stat-score').text(`${averageScore.toFixed(1)}%`);
+        $('#stat-topics').text(totalTopics);
+    } catch (error) {
+        console.error('Lỗi khi tải thống kê:', error);
+    }
+}
+
 $(document).ready(function () {
     let editingQuestionId = null;
 
@@ -57,7 +81,8 @@ $(document).ready(function () {
                 alert("Đã cập nhật câu hỏi!");
                 bootstrap.Modal.getInstance($('#addQuestionModal')).hide();
                 resetFormState();
-                loadQuestions();
+                await loadQuestions();
+                await loadDashboardStats();
             }
             return;
         }
@@ -66,7 +91,8 @@ $(document).ready(function () {
             alert("Đã lưu câu hỏi!");
             bootstrap.Modal.getInstance($('#addQuestionModal')).hide();
             resetFormState();
-            loadQuestions();
+            await loadQuestions();
+            await loadDashboardStats();
         }
     });
 
@@ -92,7 +118,8 @@ $(document).ready(function () {
     window.deleteQ = async (id) => {
         if (confirm("Xóa câu hỏi này?")) {
             await API.delete("questions", id);
-            loadQuestions();
+            await loadQuestions();
+            await loadDashboardStats();
         }
     };
 
@@ -100,6 +127,7 @@ $(document).ready(function () {
 
     loadTopics();
     loadQuestions();
+    loadDashboardStats();
 });
 
 // Hàm tải lịch sử làm bài
@@ -139,6 +167,7 @@ async function loadResults() {
         }).join('');
 
         $('#admin-result-list').html(html);
+        await loadDashboardStats();
     } catch (error) {
         console.error("Lỗi khi tải lịch sử:", error);
     }
@@ -148,7 +177,7 @@ async function loadResults() {
 window.deleteResult = async (id) => {
     if (confirm("Bạn có chắc muốn xóa dòng lịch sử này không?")) {
         await API.delete("results", id);
-        loadResults(); // Tải lại bảng
+        await loadResults();
     }
 };
 $(document).ready(function() {

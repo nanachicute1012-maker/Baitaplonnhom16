@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hệ thống Quản trị - QuizMaster</title>
+    <title>Admin | SparkQuiz</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,218 +14,277 @@
     />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="#"
-          ><i class="bi bi-shield-lock-fill"></i> QuizMaster Admin</a
+  <body class="admin-page">
+    <div class="admin-shell">
+      <header class="admin-header shadow-sm">
+        <div
+          class="container py-3 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3"
         >
-        <div class="ms-auto">
-          <a href="index.html" class="btn btn-outline-light btn-sm"
-            ><i class="bi bi-house-door"></i> Xem trang chủ</a
-          >
+          <div>
+            <p class="eyebrow mb-1">Bảng điều khiển</p>
+            <h1 class="h3 fw-bold mb-1">Trang quản trị SparkQuiz</h1>
+            <p class="text-muted mb-0">
+              Quản lý câu hỏi, theo dõi kết quả học sinh và kiểm soát nội dung
+              luyện tập.
+            </p>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <button
+              id="themeToggleAdmin"
+              class="btn btn-outline-light rounded-pill px-3"
+              type="button"
+            >
+              <i class="bi bi-moon-fill"></i> Tối
+            </button>
+            <a href="index.html" class="btn btn-primary rounded-pill px-3"
+              >Về trang chủ</a
+            >
+          </div>
         </div>
-      </div>
-    </nav>
+      </header>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <ul
-            class="nav nav-pills mb-4 bg-white p-2 rounded shadow-sm"
-            id="adminTab"
-            role="tablist"
-          >
-            <li class="nav-item">
-              <button
-                class="nav-link active fw-bold"
-                id="q-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#questions"
-              >
-                <i class="bi bi-database-fill-gear"></i> Quản lý câu hỏi
-              </button>
-            </li>
-            <li class="nav-item">
-              <button
-                class="nav-link fw-bold"
-                id="r-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#results"
-              >
-                <i class="bi bi-person-badge-fill"></i> Lịch sử làm bài
-              </button>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="adminTabContent">
-            <div class="tab-pane fade show active" id="questions">
-              <div class="card border-0 shadow-sm">
-                <div
-                  class="card-header bg-white py-3 d-flex justify-content-between align-items-center"
+      <main class="container py-4">
+        <section class="admin-hero mb-4">
+          <div class="row g-4 align-items-center">
+            <div class="col-xl-8">
+              <p class="eyebrow">Tổng quan</p>
+              <h2 class="h4 fw-bold mb-2">
+                Quản lý nội dung quiz một cách nhanh chóng và chuyên nghiệp.
+              </h2>
+              <p class="text-muted mb-3">
+                Bạn có thể thêm câu hỏi mới, cập nhật nội dung và xem lịch sử
+                làm bài của học sinh ngay từ đây.
+              </p>
+              <div class="d-flex flex-wrap gap-2">
+                <button
+                  class="btn btn-primary rounded-pill px-3"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addQuestionModal"
                 >
-                  <h5 class="mb-0 fw-bold text-primary">Ngân hàng câu hỏi</h5>
-                  <button
-                    class="btn btn-primary shadow-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addQuestionModal"
-                  >
-                    <i class="bi bi-plus-circle"></i> Thêm câu hỏi mới
-                  </button>
-                </div>
-                <div class="card-body p-0">
-                  <div class="table-responsive">
-                    <table class="table table-hover mb-0 align-middle">
-                      <thead class="table-light">
-                        <tr>
-                          <th class="ps-4">Nội dung câu hỏi</th>
-                          <th>Chủ đề</th>
-                          <th>Độ khó</th>
-                          <th class="text-end pe-4">Thao tác</th>
-                        </tr>
-                      </thead>
-                      <tbody id="admin-question-list"></tbody>
-                    </table>
-                  </div>
-                </div>
+                  <i class="bi bi-plus-circle me-1"></i> Thêm câu hỏi
+                </button>
+                <button
+                  class="btn btn-outline-secondary rounded-pill px-3"
+                  type="button"
+                  onclick="document.querySelector('#history-tab').click()"
+                >
+                  <i class="bi bi-clock-history me-1"></i> Xem lịch sử
+                </button>
               </div>
             </div>
-
-            <div class="tab-pane fade" id="results">
-              <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Học sinh</th>
-                        <th>Điểm</th>
-                        <th>Thời gian</th>
-                      </tr>
-                    </thead>
-                    <tbody id="admin-result-list"></tbody>
-                  </table>
-                </div>
+            <div class="col-xl-4">
+              <div class="admin-kpi-grid">
+                <article class="admin-kpi-card">
+                  <span class="label">Câu hỏi</span>
+                  <strong class="value" id="stat-questions">0</strong>
+                  <span class="trend">Số câu hỏi hiện có</span>
+                </article>
+                <article class="admin-kpi-card">
+                  <span class="label">Lượt thi</span>
+                  <strong class="value" id="stat-attempts">0</strong>
+                  <span class="trend">Số lượt làm bài</span>
+                </article>
+                <article class="admin-kpi-card">
+                  <span class="label">Điểm TB</span>
+                  <strong class="value" id="stat-score">0%</strong>
+                  <span class="trend">Điểm trung bình</span>
+                </article>
+                <article class="admin-kpi-card">
+                  <span class="label">Chủ đề</span>
+                  <strong class="value" id="stat-topics">0</strong>
+                  <span class="trend">Số chủ đề có sẵn</span>
+                </article>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section class="admin-card shadow-sm mb-4">
+          <div
+            class="card-header px-4 py-3 d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2"
+          >
+            <div>
+              <p class="eyebrow mb-1">Quản lý nội dung</p>
+              <h3 class="h5 mb-0">Danh sách câu hỏi</h3>
+            </div>
+            <button
+              class="btn btn-primary rounded-pill px-3"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#addQuestionModal"
+            >
+              <i class="bi bi-plus-circle me-1"></i> Thêm câu hỏi mới
+            </button>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table admin-table mb-0 align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th class="ps-4">Câu hỏi</th>
+                    <th>Chủ đề</th>
+                    <th>Độ khó</th>
+                    <th class="text-end pe-4">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-question-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-card shadow-sm mb-4">
+          <div
+            class="card-header px-4 py-3 d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2"
+          >
+            <div>
+              <p class="eyebrow mb-1">Theo dõi kết quả</p>
+              <h3 class="h5 mb-0">Lịch sử làm bài của học sinh</h3>
+            </div>
+            <span class="admin-chip"
+              ><i class="bi bi-activity"></i> Cập nhật real-time</span
+            >
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table admin-table mb-0 align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th class="ps-4">Học sinh</th>
+                    <th>Chủ đề</th>
+                    <th>Điểm số</th>
+                    <th>Thời gian</th>
+                    <th class="text-end pe-4">Xóa</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-result-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <div class="modal fade" id="addQuestionModal" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <form id="form-add-question" class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Thêm câu hỏi mới</h5>
+    <div
+      class="modal fade"
+      id="addQuestionModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div
+          class="modal-content admin-modal-content rounded-4 border-0 shadow-lg"
+        >
+          <div class="modal-header border-0 pb-0">
+            <div>
+              <p class="eyebrow mb-1">Thêm / sửa</p>
+              <h5 class="modal-title fw-bold">Thêm câu hỏi mới</h5>
+            </div>
             <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
+              aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label fw-bold">Chọn chủ đề</label>
-              <select class="form-select" id="selectTopic" required></select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label fw-bold">Nội dung câu hỏi</label>
-              <textarea class="form-control" id="content" required></textarea>
-            </div>
-            <div class="row">
-              <div class="col-6 mb-2">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="opt0"
-                  placeholder="Đáp án A"
-                  required
-                />
+          <div class="modal-body p-4 pt-2">
+            <form id="form-add-question" class="admin-login-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="selectTopic">Chủ đề</label>
+                  <select id="selectTopic" class="form-select"></select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="question_level">Độ khó</label>
+                  <select id="question_level" class="form-select">
+                    <option value="Dễ">Dễ</option>
+                    <option value="Trung bình">Trung bình</option>
+                    <option value="Khó">Khó</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="content"
+                    >Nội dung câu hỏi</label
+                  >
+                  <textarea
+                    id="content"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Nhập nội dung câu hỏi"
+                    required
+                  ></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="opt0">Đáp án A</label>
+                  <input id="opt0" class="form-control" type="text" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="opt1">Đáp án B</label>
+                  <input id="opt1" class="form-control" type="text" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="opt2">Đáp án C</label>
+                  <input id="opt2" class="form-control" type="text" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="opt3">Đáp án D</label>
+                  <input id="opt3" class="form-control" type="text" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="correct_answer"
+                    >Đáp án đúng</label
+                  >
+                  <select id="correct_answer" class="form-select">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-6 mb-2">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="opt1"
-                  placeholder="Đáp án B"
-                  required
-                />
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary rounded-pill"
+                  data-bs-dismiss="modal"
+                >
+                  Hủy
+                </button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4">
+                  Lưu câu hỏi
+                </button>
               </div>
-              <div class="col-6 mb-2">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="opt2"
-                  placeholder="Đáp án C"
-                  required
-                />
-              </div>
-              <div class="col-6 mb-2">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="opt3"
-                  placeholder="Đáp án D"
-                  required
-                />
-              </div>
-            </div>
-            <div class="row g-3">
-              <div class="col-md-6 mt-3">
-                <label class="form-label fw-bold">Độ khó</label>
-                <select class="form-select" id="question_level" required>
-                  <option value="Dễ">Dễ</option>
-                  <option value="Trung bình">Trung bình</option>
-                  <option value="Khó">Khó</option>
-                </select>
-              </div>
-              <div class="col-md-6 mt-3">
-                <label class="form-label fw-bold">Đáp án đúng</label>
-                <select class="form-select" id="correct_answer">
-                  <option value="0">A</option>
-                  <option value="1">B</option>
-                  <option value="2">C</option>
-                  <option value="3">D</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Hủy
-            </button>
-            <button type="submit" class="btn btn-primary">Lưu câu hỏi</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="results">
-      <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover mb-0 align-middle">
-              <thead class="table-light">
-                <tr>
-                  <th class="ps-4">Học sinh</th>
-                  <th>Chủ đề</th>
-                  <th>Điểm số</th>
-                  <th>Ngày làm bài</th>
-                  <th class="text-end pe-4">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody id="admin-result-list"></tbody>
-            </table>
+            </form>
           </div>
         </div>
       </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/admin.js"></script>
+    <script>
+      const themeToggleAdmin = document.getElementById("themeToggleAdmin");
+      const savedTheme = localStorage.getItem("spark-theme") || "dark";
+
+      function applyAdminTheme(theme) {
+        document.body.dataset.theme = theme;
+        if (!themeToggleAdmin) return;
+        themeToggleAdmin.innerHTML =
+          theme === "dark"
+            ? '<i class="bi bi-moon-fill"></i> Tối'
+            : '<i class="bi bi-sun-fill"></i> Sáng';
+      }
+
+      applyAdminTheme(savedTheme);
+      themeToggleAdmin?.addEventListener("click", () => {
+        const nextTheme =
+          document.body.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("spark-theme", nextTheme);
+        applyAdminTheme(nextTheme);
+      });
+    </script>
   </body>
 </html>
