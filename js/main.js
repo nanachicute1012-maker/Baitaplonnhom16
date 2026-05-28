@@ -24,59 +24,113 @@ $(document).ready(function () {
 
     // 1. Load danh sách chủ đề
     async function init() {
-        const topics = await API.fetchData("topics");
-        const html = topics.map((t, index) => {
-            const name = normalizeText(t.name || `Chủ đề ${index + 1}`);
-            const description = normalizeText(t.description) || "Bộ câu hỏi được thiết kế để giúp bạn luyện tập nhanh và hiệu quả.";
-            const image = /^(https?:)?\/\//i.test(String(t.image || ""))
-                ? t.image
-                : demoImageForTopic(index);
+        try {
+            const topics = await API.fetchData("topics");
+            const safeTopics = Array.isArray(topics) ? topics : [];
 
-            return `
-                <div class="col-lg-4 col-md-6 subject-item">
-                    <article class="topic-card subject-card h-100">
-                        <div class="subject-visual">
-                            <img src="${image}" alt="${name}" />
-                            <span class="subject-badge">Demo ${index + 1}</span>
-                        </div>
-                        <div class="subject-body">
-                            <p class="eyebrow">Môn học</p>
-                            <h5 class="topic-title">${name}</h5>
-                            <p class="topic-desc">${description}</p>
-                            <div class="subject-footer">
-                                <span class="subject-pill">⚡ Bắt đầu ngay</span>
-                                <button class="btn btn-primary topic-btn" onclick="startQuiz('${t.id}', '${name.replace(/'/g, "\\'")}')">Bắt đầu làm bài</button>
+            if (safeTopics.length === 0) {
+                $('#topic-list').html('<div class="col-12"><div class="alert alert-info mb-0">Hiện chưa có chủ đề nào để hiển thị. Vui lòng thử lại sau.</div></div>');
+                return;
+            }
+
+            const html = safeTopics.map((t, index) => {
+                const name = normalizeText(t.name || `Chủ đề ${index + 1}`);
+                const description = normalizeText(t.description) || "Bộ câu hỏi được thiết kế để giúp bạn luyện tập nhanh và hiệu quả.";
+                const image = /^(https?:)?\/\//i.test(String(t.image || ""))
+                    ? t.image
+                    : demoImageForTopic(index);
+
+                return `
+                    <div class="col-lg-4 col-md-6 subject-item">
+                        <article class="topic-card subject-card h-100">
+                            <div class="subject-visual">
+                                <img src="${image}" alt="${name}" />
+                                <span class="subject-badge">Demo ${index + 1}</span>
                             </div>
-                        </div>
-                    </article>
-                </div>`;
-        }).join('');
+                            <div class="subject-body">
+                                <p class="eyebrow">Môn học</p>
+                                <h5 class="topic-title">${name}</h5>
+                                <p class="topic-desc">${description}</p>
+                                <div class="subject-footer">
+                                    <span class="subject-pill">⚡ Bắt đầu ngay</span>
+                                    <button class="btn btn-primary topic-btn" onclick="startQuiz('${t.id}', '${name.replace(/'/g, "\\'")}')">Bắt đầu làm bài</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>`;
+            }).join('');
 
-        $('#topic-list').html(html);
+            $('#topic-list').html(html);
+        } catch (error) {
+            console.error('Lỗi khi tải chủ đề:', error);
+            $('#topic-list').html('<div class="col-12"><div class="alert alert-warning mb-0">Không thể tải danh sách chủ đề lúc này. Vui lòng kiểm tra kết nối hoặc thử lại sau.</div></div>');
+        }
+    }
+
+    function updateQuizProgress() {
+        const answered = currentQuestions.filter((q, i) => $(`input[name="q${i}"]:checked`).length > 0).length;
+        $('#quiz-progress').text(`${answered}/${currentQuestions.length} câu`);
     }
 
     // 2. Bắt đầu làm bài
     window.startQuiz = async (topicId, topicName) => {
-        const allQuestions = await API.fetchData("questions");
-        currentQuestions = allQuestions.filter(q => q.topicId == topicId);
+        try {
+            const allQuestions = await API.fetchData("questions");
+            const safeQuestions = Array.isArray(allQuestions) ? allQuestions : [];
+            currentQuestions = safeQuestions.filter(q => q.topicId == topicId);
 
-        if (currentQuestions.length === 0) return alert("Chủ đề này chưa có câu hỏi!");
+            if (currentQuestions.length === 0) {
+                alert("Chủ đề này chưa có câu hỏi!");
+                return;
+            }
 
-        $('#topic-container').addClass('d-none');
-        $('#quiz-section').removeClass('d-none');
-        $('#quiz-title').text(topicName);
+            $(".hero").addClass("d-none");
+            $("#topics .section-heading").addClass("d-none");
+            $("#why").addClass("d-none"); // Ẩn lý do nên dùng khi làm bài
+            $('#topic-container').addClass('d-none');
+            $('#quiz-section').removeClass('d-none');
+            $('#quiz-title').text(topicName);
+            $('#btn-submit').text('Nộp bài ngay');
 
-        const html = currentQuestions.map((q, i) => `
-            <div class="mb-4 p-3 bg-white rounded border">
-                <p class="fw-bold">Câu ${i+1}: ${q.content}</p>
-                ${q.options.map((opt, idx) => `
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="${idx}" id="q${i}_${idx}">
-                        <label class="form-check-label" for="q${i}_${idx}">${opt}</label>
-                    </div>`).join('')}
-            </div>`).join('');
-        $('#question-container').html(html);
+            const html = currentQuestions.map((q, i) => `
+                <article class="quiz-question-card">
+                    <div class="quiz-question-meta">
+                        <span class="quiz-question-number">Câu ${i + 1}</span>
+                        <span class="quiz-question-level">${q.level || 'Trắc nghiệm'}</span>
+                    </div>
+                <h4 class="quiz-question-text">${q.content}</h4>
+                <div class="quiz-options">
+                    ${q.options.map((opt, idx) => `
+                        <label class="quiz-option-card" for="q${i}_${idx}">
+                            <input type="radio" name="q${i}" value="${idx}" id="q${i}_${idx}">
+                            <span class="quiz-option-mark">${String.fromCharCode(65 + idx)}</span>
+                            <span class="quiz-option-text">${opt}</span>
+                        </label>`).join('')}
+                </div>
+            </article>`).join('');
+
+            $('#question-container').html(html);
+            updateQuizProgress();
+        } catch (error) {
+            console.error('Lỗi khi tải câu hỏi:', error);
+            alert('Không thể tải câu hỏi lúc này. Vui lòng thử lại sau.');
+        }
     };
+
+    // Khi quay lại danh sách, hiện lại hero
+    $('#btn-back-topics').click(function() {
+        $(".hero").removeClass("d-none");
+        $("#topics .section-heading").removeClass("d-none");
+        $("#why").removeClass("d-none");
+        $('#quiz-section').addClass('d-none');
+        $('#topic-container').removeClass('d-none');
+    });
+
+    $('#question-container').on('change', 'input[type="radio"]', function () {
+        $(this).closest('.quiz-option-card').addClass('selected');
+        $(this).closest('.quiz-options').find('.quiz-option-card').not($(this).closest('.quiz-option-card')).removeClass('selected');
+        updateQuizProgress();
+    });
 
     // 3. Nộp bài
     $('#btn-submit').click(async function () {
