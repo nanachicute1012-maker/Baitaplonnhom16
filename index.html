@@ -39,17 +39,22 @@
     <div class="container mb-4">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <div class="input-group shadow-sm">
-            <span class="input-group-text bg-white">
-              <i class="bi bi-search"></i>
-            </span>
+          <div class="search-shell shadow-sm">
+            <div class="input-group search-box">
+              <span class="input-group-text bg-white">
+                <i class="bi bi-search"></i>
+              </span>
 
-            <input
-              type="text"
-              id="searchSubject"
-              class="form-control py-3"
-              placeholder="Tìm kiếm môn học..."
-            />
+              <input
+                type="text"
+                id="searchSubject"
+                class="form-control py-3"
+                placeholder="Tìm kiếm môn học..."
+              />
+            </div>
+            <p class="search-hint mt-2 mb-0">
+              Gợi ý: nhập tên môn học hoặc chủ đề bạn muốn ôn tập.
+            </p>
           </div>
         </div>
       </div>
@@ -57,22 +62,65 @@
     <div class="container">
       <div id="topic-container">
         <div
-          class="hero-banner position-relative overflow-hidden rounded-4 p-4 mb-5 shadow-sm"
+          class="hero-banner position-relative overflow-hidden rounded-4 p-4 p-md-5 mb-5 shadow-sm"
         >
-          <div class="row align-items-center">
+          <div class="row align-items-center g-4">
             <div class="col-lg-8">
-              <span
-                class="badge bg-white text-primary mb-2 py-2 px-3 fw-semibold"
+              <span class="badge badge-soft mb-2 py-2 px-3 fw-semibold"
                 >Khám phá kiến thức</span
               >
-              <h2 class="hero-title fw-bold mb-2">
+              <h2 class="hero-title fw-bold mb-3">
                 Chinh phục điểm cao cùng QuizMaster
               </h2>
-              <p class="text-muted mb-0">
+              <p class="hero-copy mb-3">
                 Luyện tập nhanh với bộ đề mô phỏng, tổng hợp kiến thức và thử
                 thách phù hợp cho mọi trình độ.
               </p>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="chip">⚡ Tốc độ luyện tập</span>
+                <span class="chip">📊 Theo dõi kết quả</span>
+                <span class="chip">🎯 Giao diện thân thiện</span>
+              </div>
             </div>
+            <div class="col-lg-4 text-center text-lg-end">
+              <div class="hero-highlight">
+                <i class="bi bi-trophy-fill"></i>
+                <span>Ôn luyện mỗi ngày, tiến bộ mỗi giờ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+          <div class="col-md-4">
+            <article class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="bi bi-lightning-charge-fill"></i>
+              </div>
+              <h3>Thi nhanh, hiệu quả</h3>
+              <p>
+                Giao diện tối ưu giúp bạn bắt đầu luyện tập chỉ trong vài giây.
+              </p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="feature-card h-100">
+              <div class="feature-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+              <h3>Điểm số rõ ràng</h3>
+              <p>Nhận kết quả ngay sau khi nộp bài để biết mức độ tiến bộ.</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="feature-card h-100">
+              <div class="feature-icon"><i class="bi bi-sliders"></i></div>
+              <h3>Thêm chủ đề dễ dàng</h3>
+              <p>
+                Dashboard giáo viên giúp quản lý nội dung học tập một cách trực
+                quan.
+              </p>
+            </article>
           </div>
         </div>
         <div class="text-center mb-5">
