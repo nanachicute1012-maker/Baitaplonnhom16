@@ -90,7 +90,7 @@ $(document).ready(function () {
             $('#topic-container').addClass('d-none');
             $('#quiz-section').removeClass('d-none');
             $('#quiz-title').text(topicName);
-            $('#btn-submit').text('Nộp bài ngay');
+            $('#btn-submit').text('Nộp bài ngay').prop('disabled', false);
 
             const html = currentQuestions.map((q, i) => `
                 <article class="quiz-question-card">
@@ -135,13 +135,38 @@ $(document).ready(function () {
     // 3. Nộp bài
     $('#btn-submit').click(async function () {
         let score = 0;
+        $(this).prop('disabled', true).text('Đã nộp bài');
+
         currentQuestions.forEach((q, i) => {
             const selected = $(`input[name="q${i}"]:checked`).val();
+            const $questionCard = $('.quiz-question-card').eq(i);
+            const $options = $questionCard.find('.quiz-option-card');
+
+            $options.each(function (idx) {
+                $(this).find('input').prop('disabled', true); // Vô hiệu hóa lựa chọn
+
+                // Hiển thị đáp án đúng/sai
+                if (idx == q.correct_answer) {
+                    $(this).addClass('border-success bg-success-subtle shadow-sm');
+                    $(this).append('<span class="ms-auto badge bg-success"><i class="bi bi-check-lg"></i> Đáp án đúng</span>');
+                } else if (selected == idx) {
+                    $(this).addClass('border-danger bg-danger-subtle');
+                    $(this).append('<span class="ms-auto badge bg-danger"><i class="bi bi-x-lg"></i> Sai</span>');
+                }
+            });
+
             if (selected == q.correct_answer) score++;
         });
 
         const percent = Math.round((score / currentQuestions.length) * 100);
-        $('#result-body').html(`<h3>Bạn đạt: ${percent}%</h3><p>Đúng ${score}/${currentQuestions.length} câu.</p>`);
+        $('#result-body').html(`
+            <div class="py-3 text-center">
+                <i class="bi bi-check-circle-fill text-success display-1"></i>
+                <h3 class="mt-3">Bạn đạt: ${percent}%</h3>
+                <p class="fs-5">Đúng ${score}/${currentQuestions.length} câu.</p>
+                <p class="text-muted small">Cuộn xuống danh sách câu hỏi để xem chi tiết đáp án.</p>
+            </div>
+        `);
         new bootstrap.Modal($('#resultModal')).show();
 
         // Lưu kết quả
